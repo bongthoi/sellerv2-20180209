@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/layout :: head"></head>
+<body class="hold-transition skin-red sidebar-mini">
+<div class="wrapper" style="height: auto;">
+    <header th:replace="admin/fragments/layout :: header"></header>
+
+  	 <aside th:replace="admin/fragments/layout :: sidebar" class="main-sidebar"></aside>
+  	 
+  	  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Contacts
+        <small>List Item</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="admin"><i class="fa fa-dashboard" ></i> Home</a></li>
+        <li class="active">contacts</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box box-primary">
+      			 		  <!-- /* Handle the flash message */-->
+									    <th:block th:if="${message != null}">
+									        <!-- /* The message code is returned from the @Controller */ -->
+									        <div th:replace="admin/fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
+									    </th:block>
+									      <!-- /* end Handle the flash message */-->
+        
+        <div class="box-body tb-event">
+	           	<table class="table table-hover table-bordered">
+	                <thead>
+	                <tr>
+	                  <th class="text-center" style="vertical-align: middle"  width="50">Delete</th>
+	                  <th class="text-center" style="vertical-align: middle"  width="150">Name</th>
+	                  <th class="text-center" style="vertical-align: middle"  width="200">Email</th>
+	                  <th class="text-center" style="vertical-align: middle"  width="100">Phone</th>
+	                  <th class="text-center" style="vertical-align: middle">Content</th>
+	                  <th class="text-center" style="vertical-align: middle"  width="100">Address</th>
+	                  <th class="text-center" style="vertical-align: middle" width="100">Date_create</th>
+	                </tr>
+	              <thead>
+	              <tbody>
+	              	<tr th:each="contact : ${contacts}">
+                            <td><a th:href="@{~/admin/contact/delete/{id}(id=${contact.id})}"><i class="fa fa-trash-o"></i></a></td>
+                            <td th:text="${contact.name}"></td>
+                            <td th:text="${contact.email}"></td>
+                            <td th:text="${contact.phone}"></td>
+                            <td th:utext="${contact.content}"></td>
+                             <td th:utext="${contact.address}"></td>
+                            <td  th:text="${#dates.format(contact.createDate, 'dd/MM/yyyy')}"></td>
+                    </tr>
+	              </tbody>
+	              </table>
+	           
+            
+        </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer ">
+						<div class="mailbox-controls">
+							<div th:replace="admin/fragments/paginationbar :: paginationbar"></div>
+							<!-- /.pull-right -->
+						</div>
+	
+      </div>
+      <!-- /.box -->
+        
+
+    </section>
+    <!-- Main content -->
+    
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+    <footer th:replace="admin/fragments/layout :: footer"></footer>
+    </div>
+</body>
+</html>

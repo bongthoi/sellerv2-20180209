@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="admin/fragments/layout :: head"></head>
+<body class="hold-transition skin-red sidebar-mini">
+<div class="wrapper" style="height: auto;">
+     <header th:replace="admin/fragments/layout :: header"></header>
+  	 <aside th:replace="admin/fragments/layout :: sidebar" class="main-sidebar"></aside>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->    
+     <section class="content-header">
+      <h1>
+       Product<small th:text="${h1}"> Add Item</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a th:href='@{admin}'><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a th:href='@{admin/products}'th:text='Product'> Product</a></li>
+        <li class="active" th:text="${h1}"> Add</li>
+      </ol>
+    </section>
+    
+    <!-- Main content -->
+    <section class="content">
+    	<div class="row">
+     	
+    		<form method="post"  novalidate="novalidate" th:action="@{admin/product/save}" th:object="${product}" ID="frmproduct">
+    			<input type="hidden" class="form-control"  th:field="*{persisted}" >
+    			<div class="col-md-9">
+    					<div class="box box-primary" >     
+    						<div class="box-header with-border">
+    							<h3 class="box-title">Product info</h3>
+    								 		  <!-- /* Handle the flash message */-->
+									    <th:block th:if="${message != null}">
+									        <!-- /* The message code is returned from the @Controller */ -->
+									        <div th:replace="admin/fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
+									    </th:block>
+									      <!-- /* end Handle the flash message */-->
+    						</div>    
+				            <div class="box-body form-horizontal" >
+						            <div class="alert alert-danger alert-dismissible" role="alert" th:if="${#fields.hasGlobalErrors()}">
+									  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									  <ul>
+									  	<li th:each="err : ${#fields.globalErrors()}" ><label class="control-label" th:text="${err}" ></label></li>
+									  </ul>
+									</div>
+						            <div class="col-md-12">
+						           		<div class="form-group">
+						                  <label class="col-sm-2 control-label">#ID</label>
+						                  <div class="col-sm-6">
+						                    <input type="text" class="form-control"  th:field="*{id}" th:errorclass="field-error" id="idproduct" th:readonly="*{persisted}">
+						                     <label th:if="${#fields.hasErrors('id')}"  th:errors="*{id}"   class="error"></label>
+						                  </div>
+						                  <div class="col-md-4"><button class="btn btn-success" type="button" id="btnGenbarcode" th:disabled="*{persisted}">Genarate ID# </button></div>
+						                </div>
+						                
+						                <div class="form-group">
+						                  <label class="col-sm-2 control-label">Name</label>
+						                  <div class="col-sm-6">
+						                    <input type="text" class="form-control"  th:field="*{ProductName}" th:errorclass="field-error">
+						                     <label th:if="${#fields.hasErrors('ProductName')}" th:errors="*{ProductName}"   class="error"></label>
+						                  </div>
+						                </div>
+						                
+						                
+						                
+						                  <div class="form-group">
+						                  <label class="col-sm-2 control-label">Sell Price </label>
+						                  <div class="col-sm-6">
+						                    <input type="text" class="form-control"  th:field="*{SellPrice}" th:errorclass="field-error">
+						                     <label th:if="${#fields.hasErrors('SellPrice')}" th:errors="*{SellPrice}"   class="error"></label>
+						                  </div>
+						                </div>
+						                
+						                
+						                 <div class="form-group">
+						                  <label class="col-sm-2 control-label">Description</label>
+						                  <div class="col-sm-10">
+						                    <textarea class="form-control"  th:field="*{ProductDes}" ></textarea>
+						                  </div>
+						                </div>
+						            </div>
+						           
+							</div>
+							 <div class="box-footer">
+							 	<div class="col-md-12">
+							 		<div class="col-md-2"></div>
+							 		<div class="col-md-10">
+							 		<a th:href='@{admin/products}'>Go Back </a>
+								 	<button type="button" class="btn btn-primary" id="btnsaveproduct" >
+						                <i class="fa fa-save"></i> Save
+						      		</button>
+							 		</div>
+							 	</div>
+						   <!-- box-footer --></div>
+				       </div>
+    			</div>
+    			
+    			<div class="col-md-3">
+  					 <div class="box box-primary">
+						        <div class="box-header with-border">
+								    <h3 class="box-title"><i class="fa fa-tag"></i> Feature Image</h3>
+								      <div class="box-tools pull-right">
+							            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			          				</div>
+						        </div> 
+						        <div class="box-body">
+						        		<div id="feature_image_div">
+						        			<img class="img img-responsive" th:if="${!#strings.isEmpty(product.FeatureImage)} " th:src="@{'upload/product/' +${product.FeatureImage}}">
+						        		</div>
+								    			<div class="form-group">
+								    					<input type="hidden"value="no_image.jpg"  th:field="*{FeatureImage}" id="feature_image_input">
+								    					<a href="javascript:void(0);" id="feature_image_btn"> Set feature image</a>	
+								    			</div>
+						        </div>
+						        <!-- /.box-body -->
+						      </div>
+								 <!-- Default box -->
+			      <div class="box box-primary">
+			        <div class="box-header with-border">
+					    <h3 class="box-title"><i class="fa fa-tag"></i>Status</h3>
+					    <div class="box-tools pull-right">
+				            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+				         
+          				</div>
+			        </div> 
+			        <div class="box-body" >
+			       		   <div class="form-group">
+				                <label>
+				                  <input type="radio" class="minimal"   th:field="*{enabled}" value="1" >
+				                   <span class='label label-success'>Active</span>
+				        		</label>
+				              </div>
+				             <div class="form-group">
+				                <label>
+				                  <input type="radio"class="minimal"   th:field="*{enabled}" value="0" >
+				                    <span class='label label-danger'>Disabled</span>
+				        		</label>
+				              </div>  
+			        
+			        </div>
+			        <!-- /.box-body -->
+			      </div>
+			      <!-- /.box -->      
+						      
+    			</div>
+    		</form>
+    	</div>
+    	
+    	
+	</section>
+    <!-- /.content -->
+  </div>
+	
+	   <iframe id="form_target_frame" name="form_target" style="display:none"></iframe>
+			<form id="my_form_uploadproduct"  target="form_target" method="post" 
+						enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
+							<input id="txtimage_product" name="img" type="file">
+				</form>	 	
+	<input id="txtimage_product_feature" name="img" type="file" style="display:none" >		
+  <!-- /.content-wrapper -->
+  
+<script src="js/product/main.js"></script>
+  	
+    <footer th:replace="admin/fragments/layout :: footer"></footer>
+    <!-- /wapper -->
+  </div>  
+</body>
+</html>

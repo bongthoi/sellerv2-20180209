@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/layout :: head"></head>
+<body class="hold-transition skin-green sidebar-mini">
+<div class="wrapper" style="height: auto;">
+    <header th:replace="admin/fragments/layout :: header"></header>
+
+  	 <aside th:replace="admin/fragments/layout :: sidebar" class="main-sidebar"></aside>
+  	 
+  	  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Dashboard
+        <small>control panel</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="admin"><i class="fa fa-dashboard" ></i> Back-End</a></li>
+        <li class="active"><a href="#">Front-End</a></li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Your Page Content Here -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  	 
+
+    <footer th:replace="admin/fragments/layout :: footer"></footer>
+  <!-- /wapper -->  
+ </div>   
+</body>
+</html>

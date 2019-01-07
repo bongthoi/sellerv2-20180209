@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/layout :: head"></head>
+<body class="hold-transition skin-red sidebar-mini">
+    <header th:replace="admin/fragments/layout :: header"></header>
+
+  	 <aside th:replace="admin/fragments/layout :: sidebar" class="main-sidebar"></aside>
+  	 
+  	  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Contacts
+        <small>List Item</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="admin"><i class="fa fa-dashboard" ></i> Home</a></li>
+        <li class="active">contacts</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box box-primary">
+      			 		  <!-- /* Handle the flash message */-->
+									    <th:block th:if="${message != null}">
+									        <!-- /* The message code is returned from the @Controller */ -->
+									        <div th:replace="admin/fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
+									    </th:block>
+									      <!-- /* end Handle the flash message */-->
+        
+        <div class="box-body tb-event">
+	           <div class="col-sm-6" style="">
+                <h4 >Thông tin liên hệ:</h4>
+                    <div style = "">
+                        <form class = "bs-example bs-example-form" role = "form" action="#" th:action="@{~/contact/save}" th:object="${contact}" method="POST" novalidate="novalidate">
+                        
+                        	<input type="hidden"  th:field="*{id}">
+                        	
+                        	<div class = "input-group">
+                                <span class = "input-group-addon">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </span>
+                                <input type = "text" class = "form-control"  th:placeholder="#{contact.placeholder.name}" th:field="*{name}" th:errorclass="field-error">
+                            </div>
+                                <em th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red;"></em>
+                            <br>
+                            <div class = "input-group">
+                                <span class = "input-group-addon">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>                      
+                                </span>
+                                <input type = "text"  class = "form-control" th:placeholder="#{contact.placeholder.email}"  th:field="*{email}" th:errorclass="field-error" >
+                                
+                            </div>
+                                <em th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red;"></em>
+                            <br>
+                            <div class = "input-group">
+                                <span class = "input-group-addon">
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                </span>
+                                <input type = "text" class =" form-control"  th:placeholder="#{contact.placeholder.phone}" th:field="*{phone}">
+                                
+                            </div>
+                            <br>
+                            <div class = "input-group">
+                                <span class = "input-group-addon">
+                                    <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                                </span>
+                                <input type = "text" class =" form-control"  th:placeholder="#{contact.placeholder.address}" th:field="*{address}">
+                                
+                            </div>                         
+                            <br>
+                            <div class = "input-group">
+                                <span class = "input-group-addon">
+                                    <i class="fa fa-sliders" aria-hidden="true"></i>
+                                </span>
+                                <input type = "text" class = "form-control"  th:placeholder="#{contact.placeholder.subject}" th:field="*{subject}" th:errorclass="field-error">
+                            </div>
+                                <em th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" style="color:red;"></em>
+                            <br>
+                            <div class = "input-group">
+                                <textarea   rows="8" cols="65"  class="form-control" id="inputTextarea" name="content" th:field="*{content}" th:placeholder="#{contact.placeholder.content}"> </textarea> 
+                            </div>
+                            <br>
+                            <div class = "input-group text-end">
+                                <a href="#">
+                                    <button type="submit" th:text="#{contact.send}" class="w3-btn w3-white w3-border w3-border-red w3-text-red w3-round-large" style="padding: 5px 8px;">Gửi yêu cầu</button>
+                                </a>
+                            </div>
+                        </form>                 
+                    </div>
+                </div>
+	            
+           
+           
+            
+        </div>
+        <!-- /.box-body -->
+        
+      </div>
+      <!-- /.box -->
+        
+
+    </section>
+    <!-- Main content -->
+    
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+    <footer th:replace="admin/fragments/layout :: footer"></footer>
+</body>
+</html>

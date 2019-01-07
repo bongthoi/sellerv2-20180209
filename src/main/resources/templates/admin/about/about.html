@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/layout :: head"></head>
+<body class="hold-transition skin-red sidebar-mini">
+<div class="wrapper" style="height: auto;">
+    <header th:replace="admin/fragments/layout :: header"></header>
+  	 <aside th:replace="admin/fragments/layout :: sidebar" class="main-sidebar"></aside>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->    
+     <section class="content-header">
+      <h1>
+       About<small></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">About</li>
+      </ol>
+    </section>
+    
+    <!-- Main content -->
+    <section class="content">
+    	<div class="row">
+     
+    		<form method="post" id="frm_about_edit"  novalidate="novalidate" th:action="@{~/admin/about/save}" th:object="${about}">
+    			<div class="col-md-9">
+    					<div class="box box-primary" >     
+    						<div class="box-header with-border">
+    								 		  <!-- /* Handle the flash message */-->
+									    <th:block th:if="${message != null}">
+									        <!-- /* The message code is returned from the @Controller */ -->
+									        <div th:replace="admin/fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
+									    </th:block>
+									      <!-- /* end Handle the flash message */-->
+    						</div>    
+				            <div class="box-body">
+				          		  <input type="hidden"  th:field="*{id}">
+				          		  
+				          		   <input type="hidden"  th:field="*{logo}">
+				          		
+								<div class="form-group">
+									<label >Title</label>
+									 <input class="form-control"   type="text" th:field="*{title}" th:errorclass="field-error">
+									 <label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"  class="error"></label>
+								</div>
+									<div class="form-group">
+									<label >Description</label>
+									 <input class="form-control" type="text" th:field="*{description}"  th:errorclass="field-error">
+									  <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"  class="error"></label>
+								</div>
+								<div>
+									<label>Content:</label>
+									<textarea class="form-control" id="my_editor_about"  style="width: 100%; height: 200px;"   th:field="*{content}" th:errorclass="field-error" ></textarea>
+									
+								</div>
+									
+							</div>
+							 <div class="box-footer">
+								 	<button type="button" class="btn btn-app" id="btnSaveAbout">
+						                <i class="fa fa-save"></i> Save
+						      		</button>
+								 </div>
+				       </div>
+    			</div>
+    			<div class="col-md-3">
+  					
+    			</div>
+    		</form>
+    	</div>
+    	
+    	
+	</section>
+    <!-- /.content -->
+  </div>
+
+   <iframe id="form_target_frame" name="form_target" style="display:none"></iframe>
+			<form id="my_form_uploadabout"  target="form_target" method="post" 
+						enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
+							<input id="txtimage_about" name="img" type="file" data-ideditor="my_editor_about">
+				</form>	 	
+  <!-- /.content-wrapper -->
+<script src="js/about/main.js"></script>
+  	 
+
+    <footer th:replace="admin/fragments/layout :: footer"></footer>
+      <!-- ./wrapper -->
+ </div>
+</body>
+</html>
